@@ -43,8 +43,25 @@ router.get("/countries", async (req, res) =>{
                   };
             }))
         }
+        return allCountries;
     } catch (error) {
-        
+        res.json({error: "Sin resultados"})
+    }
+
+    // si me pasan nombre
+    if(name){
+        try {
+            let ctry = await Country.findAll({
+                where: {
+                    name: {
+                        [Op.iLike]: '%' + name + '%'
+                    }
+                }
+            })
+            return res.json(ctry)
+        } catch (error) {
+            res.json({error: "El país ingresado no existe"})
+        }
     }
 })
 
@@ -53,6 +70,23 @@ router.get("/countries", async (req, res) =>{
 // Debe traer solo los datos pedidos en la ruta de detalle de país
 // Incluir los datos de las actividades turísticas correspondientes
 
+router.get("/countries/:idPais", async (req, res) =>{
+    const { idPais } = req.params;
+
+    try {
+        const country = await Country.findOne({
+            where: {
+                cca3: idPais
+            }
+        })
+        res.json(country)
+    } catch (error) {
+        res.json({ error: "No se encontró el ID ingresado"})
+    }
+})
+
 // [ ] GET /countries?name="...":
 // Obtener los países que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto)
 // Si no existe ningún país mostrar un mensaje adecuado
+
+module.exports = router;
