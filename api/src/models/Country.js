@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
 // Área
 // Población
   sequelize.define('country', {
-    cca3: {
+    id: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
@@ -27,21 +27,24 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     continents: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     capital: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     subregion: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
     area: {
       type: DataTypes.INTEGER,
+      allowNull: true,
     },
     population: {
       type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {

@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const axios = require("axios");
 const { Activity, Country } = require("../db");
-const { Op } = require("sequelize");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -12,78 +11,76 @@ const router = Router();
 // En una primera instancia deberán traer todos los países desde restcountries y guardarlos en su propia base de datos y luego ya utilizarlos desde allí (Debe retonar sólo los datos necesarios para la ruta principal)
 // Obtener un listado de los paises.
 
-// me traigo la data de la api
-const data = async () => {
-    const arr = await axios.get("https://restcountries.com/v3.1/all")
-    return arr.data.results
-}
-
-router.get("/countries", async (req, res) =>{
-    // me guardo el nombre por si se busca el país por nombre
-    const name = req.query.name;
-    // guardo la consulta a la api
-    const allCountries = await data();
-    
+const getApiInfo = async () => {
     try {
-        // si tengo la lista llena no hago nada
-        let hay = await Country.findAll()
-
-        if(!hay.length){ 
-            // si no tengo nada en mi base de datos, lo creo
-            await Country.bulkCreate(allCountries.data.map((c) => {
-                return {
-                    cca3: c.cca3,
-                    name: c.name.common.toLowerCase(),
-                    flags: c.flags[0],
-                    continents: c.continents,
-                    capital: c.capital || ["No tiene capital"],
-                    subregion: c.subregion || ["No hay subregion"],
-                    area: Number(c.area),
-                    population: Number(c.population),
-                  };
-            }))
-        }
-        return allCountries;
+        let api = (await axios.get("https://restcountries.com/v3.1/all"));
+        api = await api.data.map((c) => 
+            Country.findOrCreate({
+            where: {
+                id: c.cca3,
+                name: c.translations.spa.official,
+                flags: c.flags.png,
+                continents: c.continents[0],
+                capital: c.capital != null ? c.capital[0] : "No data", 
+                subregion: c.subregion != null ? c.subregion : "No data",
+                area: c.area,
+                population: c.population,
+            }
+        }))
+        console.log("Base de datos cargada correctamente")
     } catch (error) {
-        res.json({error: "Sin resultados"})
-    }
+        console.log(error)
+    }   
+};
 
-    // si me pasan nombre
-    if(name){
-        try {
-            let ctry = await Country.findAll({
-                where: {
-                    name: {
-                        [Op.iLike]: '%' + name + '%'
-                    }
-                }
-            })
-            return res.json(ctry)
-        } catch (error) {
-            res.json({error: "El país ingresado no existe"})
+getApiInfo();
+
+
+router.get('/countries', async (req, res) => {
+   const name = req.query.name // esto es por si me pasan el nombre por query
+   let countriesTotal = await Country.findAll({
+        include:{
+            model: Activity,
+            attributes: ["name", "difficulty", "duration", "season"],
+            through:{
+                attributes: [],
+            }
         }
-    }
-})
+    });
+   if(name){
+    let countryName = await countriesTotal.filter(c => c.name.toLowerCase().includes(name.toLowerCase()));
+    countryName.length ? // encontraste algo?
+    res.status(200).send(countryName) : // si enconraste manda esto
+    res.status(404).send("No se encontró el país.")
+   }
+   else { // si no hay query
+    res.status(200).send(countriesTotal)
+   }
+});
 
 // [ ] GET /countries/{idPais}:
 // Obtener el detalle de un país en particular
 // Debe traer solo los datos pedidos en la ruta de detalle de país
 // Incluir los datos de las actividades turísticas correspondientes
 
-router.get("/countries/:idPais", async (req, res) =>{
-    const { idPais } = req.params;
-
-    try {
-        const country = await Country.findOne({
-            where: {
-                cca3: idPais
+router.get("/countries/:id", async (req, res) =>{
+    const { id } = req.params;
+    const totalCountries = await Country.findAll({
+        include:{
+            model: Activity,
+            attributes: ["name", "difficulty", "duration", "season"],
+            through:{
+                attributes: [],
             }
-        })
-        res.json(country)
-    } catch (error) {
-        res.json({ error: "No se encontró el ID ingresado"})
+        }
+    });
+    if(id){
+        let countriesID = await totalCountries.filter( c => c.id.toLowerCase() === id.toLowerCase())
+        countriesID.length ? // encontraste algo?
+        res.status(200).json(countriesID) : // si encontraste manda esto
+        res.status(404).send('No se encontró el país')
     }
-})
+    })
 
 // [ ] GET /countries?name="...":
 // Obtener los países que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto)

@@ -16,12 +16,16 @@ sequelize.define('activity',
         },
         difficulty: {
             type: DataTypes.INTEGER,
+            validate: {
+                min: 1,
+                max: 5,
+              },
         },
         duration: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         season: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM('Verano', 'Otoño', 'Invierno', 'Primavera')
         },
     },
 {
