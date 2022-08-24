@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const axios = require("axios")
+// const axios = require("axios")
 const {Country, Activity} = require("../db")
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -24,7 +24,7 @@ router.get('/activities', async (req, res) => {
  });
 
 router.post("/activities", async (req, res) => {
-    const { name, difficulty, duration, season, countryId } = req.body;
+    const { name, difficulty, duration, season, country } = req.body;
     
     try {
         const activityCreate = await Activity.create({
@@ -36,11 +36,11 @@ router.post("/activities", async (req, res) => {
     
         const findActivity = await Country.findAll({
             where: {
-                id: countryId,
+                name: country,
             }
         });
 
-        activityCreate.addCountries(findActivity);
+        activityCreate.addCountries(findActivity); // trae el name del pais
         res.status(200).json("La actividad ha sido creada correctamente.")
     } catch (error) {
         res.status(400).json({error: "Error al crear la actividad indicada."})
