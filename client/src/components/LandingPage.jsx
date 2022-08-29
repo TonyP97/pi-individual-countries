@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./LandingPage.css"
 
 // Pagina inicial: deben armar una landing page con
 
@@ -8,10 +9,10 @@ import { Link } from "react-router-dom";
 
 export default function LandingPage() {
     return (
-        <div>
-            <h1>Bienvenidos</h1>
+        <div className="landing">
+            <h1 className="titulo">Bienvenidos</h1>
             <Link to = "/home">
-                <button>Home</button>
+                <button className="botonHome">Home</button>
             </Link>
         </div>
     )

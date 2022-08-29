@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
 // Subregión
 // Área
 // Población
-  sequelize.define('country', {
+  sequelize.define('country', { // defino mi modelo country con sus distintas propiedades
     id: {
       type: DataTypes.STRING,
       primaryKey: true,

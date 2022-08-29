@@ -1,11 +1,16 @@
 import React, { Fragment } from "react";
+// importo los hooks que voy a usar de react
 import { useState, useEffect } from "react";
+// importo los hooks de react redux
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, filterCountriesByContinent, getActivities ,filterCreated, orderByName, orderByPopulation } from "../actions";
+// importo las actions
+import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage } from "../actions";
 import { Link } from "react-router-dom";
+// importo los componentes
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
+import "./Home.css"
 
 // Ruta principal: debe contener
 
@@ -19,55 +24,57 @@ import SearchBar from "./SearchBar";
 // [ ] Paginado para ir buscando y mostrando los siguientes paises, 10 paises por pagina, mostrando los primeros 9 en la primer pagina.
 
 export default function Home(){
+    // CONSTANTES
     const dispatch = useDispatch();
+    // ahora vamos a traer del state los countries, las activities y las páginas
     const allCountries = useSelector((state) => state.countries) // con use selector traeme en la constantes allCountries todo lo que esta en el estado de 
     const activities = useSelector((state) => state.activities)
-    // ahora vamos a traer del state los countries
-    // me defino estados locales
-    const [currentPage, setCurrentPage] = useState(1); // arranco en la primer paginas
-    const [countriesPerPage, setCountriesPerPage] = useState(10); // 10 paises por pagina
-    const indexOfLastCountrie = currentPage === 1 ? currentPage * countriesPerPage : (currentPage * countriesPerPage) -1 // el indice del ultimo país va a ser la pagina actual multiplicada por los paises por pagina, si la pagina es 1 los paises por pagina van a ser 9, por eso para sacar el indice de las demás paginas se le debe restar uno, para recuperar el faltante en la primer pagina
-    // const indexOfLastCountrie = currentPage * countriesPerPage 
-    const indexOfFirstCountrie = indexOfLastCountrie - countriesPerPage; // el indice del ultimo pais menos la cantidad de paises que tengo por pagina me va a dar el indice del primer pais
-    const currentCountries = allCountries.slice(indexOfFirstCountrie, indexOfLastCountrie) // esto me da los paises que se encuentran en la pagina actual
-    if(currentPage === 1 && countriesPerPage === 10) {
-        setCountriesPerPage(9) // 9 paises en la primer pagina
-      } else if(currentPage !== 1 && countriesPerPage === 9) {
-        setCountriesPerPage(10)} // 10 paises en el resto de las paginas
-    // esta constante setea la pagina en el numero de pagina que se encuentra. ayuda al renderizado
-    const paginado = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    }
-    const [orden, setOrden] = useState('');
+    const page = useSelector((state) => state.page)
+    
+    // constantes paginado
+    const countriesPerPage = 10; // 10 paises por página
+    const indexOfLastCountrie = page * countriesPerPage - 1; // el index del ultimo país, se resta 1 porque en la primer página son 9 
+    const indexOfFirstCountrie = page === 1 ? indexOfLastCountrie - (countriesPerPage - 1) : indexOfLastCountrie - countriesPerPage; // si es la primer página, se muestran 9, sino 10
+    const currentCountries = allCountries.slice(indexOfFirstCountrie, indexOfLastCountrie) // paises de la página actual
+
+    const [, setOrden] = useState('');
 
     useEffect(() => {
         dispatch(getCountries());
         dispatch(getActivities())
     }, [dispatch])
-
+    
+    // HANDLES
+    // esta funcion me recarga los paises nuevamente y además me hace un reload de la página, lo utilizo para "limpiar los filtros"
     function handleClick(e){
         e.preventDefault();
-        dispatch(getCountries)
+        dispatch(getCountries);
+        window.location.reload();
     }
-
+    
+    // esta funcion actua sobre el div de filtros, se encarga de filtrar los continentes por nombre utilizando la funcion que trae desde las actions
     function handleFilterContinent(e){
         e.preventDefault();
         dispatch(filterCountriesByContinent(e.target.value))
     } 
 
-    function handleFilterCreated(e){
+    // al igual que la funcion anterior, actua sobre el div de filtros, en este caso los filtra por actividad creada
+    function handlefilterActivityCreated(e){
         e.preventDefault();
-        dispatch(filterCreated(e.target.value))
+        dispatch(filterActivityCreated(e.target.value))
 
     }
 
+    // actua sobre el div de filtros, en este caso los filtra por nombre
     function handleOrderByName(e){
         e.preventDefault();
         dispatch(orderByName(e.target.value))
         setCurrentPage(1);
         setOrden(`Ordenado ${e.target.value}`)
+        // console.log(orden)
     }
 
+    // actua sobre el div de filtros, los filtra por poblacion
     function handleOrderByPopulation(e){
         e.preventDefault();
         dispatch(orderByPopulation(e.target.value))
@@ -75,16 +82,20 @@ export default function Home(){
         setOrden(`Ordenado ${e.target.value}`)
     }
 
-    // renderizado
+    // RENDERIZADO
     return (
         <div>
-            <Link to= "/"><button>Volver al landing</button></Link>
-            <Link to = "/activities"><button>Crear actividad</button></Link>
+            {/* BOTON VOLVER */}
+            <Link to= "/"><button className="botonVolver">Volver</button></Link>
+            
+            {/* TÍTULO */}
             <h1>PI Countries</h1>
-            <button onClick={e => {handleClick(e)}}>Volver a cargar los paises</button>
+
+            {/* CREAR ACTIVIDADES */}
+            <Link to = "/activities"><button className="botonCrearActividad">Crear actividad</button></Link>
             
-            
-            <div>
+            {/* FILTROS */}
+            <div className="filtros">
                 <select onChange={e => {handleFilterContinent(e)}}>
                     {/* continentes */}
                     <option hidden selected>Filtrar por continente</option>
@@ -98,7 +109,7 @@ export default function Home(){
                     <option value="Oceania">Oceanía</option>
                 </select>
 
-                <select onChange={e => {handleFilterCreated(e)}}>
+                <select onChange={e => {handlefilterActivityCreated(e)}}>
                     {/* actividad */}
                     <option value="sin actividad" hidden selected>Filtrar por actividad turística</option>
                         {activities.map((act)=>(
@@ -120,26 +131,37 @@ export default function Home(){
                     <option value="descpob">Descendente por cantidad de población</option>
                 </select>
 
-                <Paginado
-                countriesPerPage={countriesPerPage}
-                allCountries={allCountries.length}
-                paginado={paginado}
-                />
-
+                {/* LIMPIAR FILTROS */}
+                <button onClick={e => {handleClick(e)}} className="botonLimpiar">Limpiar filtros</button>
+            </div>
+            
+            {/* BUSCADOR */}
+            <div className="buscador">
                 <SearchBar/>
+            </div>
 
+            {/* CARTAS */}
+            <div className="contenedor">
+            <div className="cartas">
                 {
-                    // allCountries?.map((c) => {
-                    currentCountries?.map((c) => {
-                        return (
-                            <Fragment>
-                                <Link to={"/countries/" + c.id}>
-                                    <Card name={c.name} id={c.id} continents={c.continents} flags={c.flags}/>
-                                </Link>
-                            </Fragment>
-
+                // allCountries?.map((c) => {
+                currentCountries?.map((c) => {
+                    return (
+                        <Fragment>
+                            <Link to={"/countries/" + c.id} className="carta">
+                                <Card name={c.name} id={c.id} continents={c.continents} flags={c.flags}/>
+                            </Link>
+                        </Fragment>                            
                     )})
                 }
+            </div>
+            </div>
+
+            {/* PAGINACIÓN */}
+            <div className="paginadito">
+                <Paginado
+                countriesPerPage={countriesPerPage}
+                />
             </div>
         </div>
     )

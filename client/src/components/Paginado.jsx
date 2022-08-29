@@ -1,23 +1,54 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentPage } from "../actions";
+import "./Paginado.css"
 
-export default function Paginado ({countriesPerPage, allCountries, paginado}){
-    const pageNumbers = []
+export default function Paginado({countriesPerPage}){
+    const dispatch = useDispatch();
+    const { countries, page } = useSelector((state) => state);
 
-    for (let i = 0; i <= Math.ceil(allCountries/countriesPerPage) ; i++) { // redondea para arriba todos los paises sobre la cantidad de paises q quiero por pagina
-        pageNumbers.push(i + 1) // para que no me muestre la página 0
-    }
+    const pageNumbers = [] // acá me guardo los números de página
+    
+    // esta función cambia el número de página, lo setea usando la action importada
+    const changePage = (pageNumber) => {
+        dispatch(setCurrentPage(pageNumber))
+    };
 
-    return (
-        <nav>
-            <ul className="paginado">
-                {/* si tengo este arreglo, mapealo y devolveme cada numero que te devuelva el paginado */}
-                { pageNumbers && pageNumbers.map(number =>(
-                    <li className="number" key={number}>
-                        <button onClick={() => paginado(number)}>{number}</button>
-                        {/* <a onClick={() => paginado(number)}>{number}</a> */}
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    )
+    for (let i = 0; i <= Math.trunc((countries.length /countriesPerPage)) ; i++) { // me devuelvo la parte entera del num por si salen decimales
+                    pageNumbers.push(i + 1) // para que arranque en la primer página
+                }
+
+return (
+    // lista de todas las páginas que permite seleccionarlas
+    <div className="contenedorPaginado">
+        <ul className="paginado">
+            {pageNumbers?.map((page) => (
+            <li className="number">
+                <button className="botonPage" onClick={() => changePage(page)}>
+                    {page}
+                </button>
+            </li>
+
+            ))}
+        </ul>
+        
+        {/* botonera que permite cambiar de página y muestra la pagina actual */}
+        {pageNumbers.length > 0 &&(
+        <div className="botoncitospage">
+            <div>
+                <button className="botonprimer" onClick={() => changePage(1)} disabled={page === 1}>Primera</button>
+                <button className="botonatras" onClick={() => changePage(page - 1)} disabled={page === 1}>Anterior</button>
+            </div>
+            <span>
+                Página {page} de {pageNumbers.length}
+            </span>
+            <div>
+                <button className="botonsiguiente" onClick={() => changePage(page + 1)} disabled={page >= pageNumbers.length}>Siguiente</button>
+                <button className="botonultima" onClick={() => changePage(pageNumbers.length)} disabled={page >= pageNumbers.length}>Última</button>
+            </div>
+        </div>
+        )}
+    </div>
+)
+
 }

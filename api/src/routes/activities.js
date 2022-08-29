@@ -11,6 +11,7 @@ const router = Router();
 // Recibe los datos recolectados desde el formulario controlado de la ruta de creación de actividad turística por body
 // Crea una actividad turística en la base de datos, relacionada con los países correspondientes
 
+//obtengo todas las actividades incluyendo los paises 
 router.get('/activities', async (req, res) => {
     try {
        const allActivities = await Activity.findAll({
@@ -23,6 +24,7 @@ router.get('/activities', async (req, res) => {
  
  });
 
+ // creo la actividad pasandole los datos necesarios, encuentro el país o paises a los cuales se debe asignar esa actividad y finalmente la creo
 router.post("/activities", async (req, res) => {
     const { name, difficulty, duration, season, country } = req.body;
     

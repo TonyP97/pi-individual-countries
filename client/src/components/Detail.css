@@ -1,0 +1,50 @@
+.contenedorDetail {
+    display: flex;
+    flex-direction: column
+}
+.detalle {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    margin: 1% 38%;
+    background-color: rgba(255, 228, 196, 0.800);
+    border-radius: 25px;
+}
+
+h2 {
+    margin: 2px;
+}
+
+h3 {
+    margin: 4px;
+    text-decoration: none;
+}
+
+h4 {
+    margin: 4px;
+}
+
+h5 {
+    margin: 4px;
+}
+
+p {
+    margin: 4px;
+}
+
+.imagen {
+    width: auto;
+    height: auto;
+}
+
+.botonVolverDetail {
+    background-color: rgba(255, 228, 196, 0.726);
+    border-radius: 20px;
+    border-color: black;
+    border-width: 1px;
+
+}
+
+.botonVolverDetail:hover {
+    background-color: rgba(236, 162, 65, 0.726)
+}

@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail } from "../actions";
 import { useEffect } from "react";
+import ActivityDetail from "./ActivityDetailCard"
+import "./Detail.css"
 
 // Ruta de detalle de país: debe contener
 
@@ -17,20 +19,20 @@ import { useEffect } from "react";
 export default function Detail(props){
     // console.log(props)
     const dispatch = useDispatch();
-    const id = props.match.params.id
+    const id = props.match.params.id // asi accedo al pais que matchea con el ID que debe mostrar
 
     useEffect(() => {
         dispatch(getDetail(id)) // de esta forma accedo al id de ese detalle
     }, [dispatch, id])
 
-    const myCountry = useSelector((state) => state.detail)
+    const myCountry = useSelector((state) => state.detail) // accedo al estado del detail del país solicitado
 
     return(
-        <div>
+        <div className="contenedorDetail">
             {
-                myCountry.length?
-                <div>
-                    <img src={myCountry[0].flags} alt="Not found" />
+                myCountry.length? // si encontro el detalle del país solicitado, lo muestro
+                <div className="detalle">
+                    <img src={myCountry[0].flags} alt="Not found" className="imagen"/>
                     <h2>País: {myCountry[0].name}</h2>
                     <h3>{myCountry[0].id}</h3>
                     <h3>Continente: {myCountry[0].continents}</h3>
@@ -38,14 +40,30 @@ export default function Detail(props){
                     <h5>Subregión: {myCountry[0].subregion}</h5>
                     <p>Área: {myCountry[0].area}km2</p>
                     <p>Población: {myCountry[0].population}</p>
-                    <h5>Actividades turísticas: {myCountry[0].activities.length? myCountry[0].activities.map(el => el.name + ", ") : "Ninguna por el momento"}</h5>
-                    {/* <h5>Actividades turísticas:{myCountry[0].activities}, </h5> */}
+                    <h5>Actividades turísticas: {myCountry[0].activities.length? myCountry[0].activities.map(el => `||-${el.name} -Dificultad:${el.difficulty} -Duración:${el.duration} -Estación:${el.season}|| `) : "Ninguna por el momento"} </h5>
                 </div> 
-                : <p>Loading...</p>
+                : <p>Loading...</p> // sino muestro un Loading...
+                
             }
-            <Link to= "/home">
-                <button>Volver</button>
-            </Link>
+                
+                {/* <div>
+                {
+                myCountry.activities.map(el => {
+                    return (
+                        <div>
+                            <ActivityDetail name={el.name} id={el.id} difficulty={el.difficulty} duration={el.duration} season={el.season}></ActivityDetail>
+                        </div>
+                    )
+                    })
+                }
+                </div> */}
+            
+
+            <div>
+                <Link to= "/home">
+                    <button className="botonVolverDetail">Volver</button> 
+                </Link>
+            </div>
         </div>
     )
 }

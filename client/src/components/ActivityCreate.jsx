@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, Fragment} from "react";
 import { Link, useHistory } from "react-router-dom";
-import { postActivity, getCountries } from "../actions";
+import { postActivity, getCountries, getActivities } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
+import "./ActivityCreate.css" 
 
 // Ruta de creación de actividad turística: debe contener
 
@@ -13,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 // [ ] Posibilidad de seleccionar/agregar varios países en simultáneo
 // [ ] Botón/Opción para crear una nueva actividad turística
 
-function validate(input){
+function validate(input){ // esta función valida, si falta algo en algun input, nos lanza un error
     let errors = [];
     if(!input.name){
         errors.name = "Se requiere un nombre de actividad"
@@ -36,9 +37,11 @@ function validate(input){
 export default function ActivityCreate(){
     const dispatch = useDispatch();
     const history = useHistory(); // esto sirve para redirigir 
-    const countries = useSelector((state) => state.countries);
+    const countries = useSelector((state) => state.countries); // traigo todo lo que esta en mi state de countries
     const [errors, setErros] = useState({});
+    const activities = useSelector((state) => state.activities) // traigo todo lo que esta en mi state de activities
 
+    // declaro mi input con los diferentes campos que deben ser modificados/los campos que son requeridos por la actividad
     const [input, setInput] = useState({
         name: "",
         difficulty: "",
@@ -47,49 +50,53 @@ export default function ActivityCreate(){
         country: []
     });
 
+    // utilizada en nombre, duración y dificultad, esta funcion se encarga de setear en mi input el valor asignado al input
     function handleChange(e){
         setInput({
             ...input,
             [e.target.name] : e.target.value
         })
-        setErros(validate({
+        setErros(validate({ // valida que haya algo en el input
             ...input,
             [e.target.name] : e.target.value
         }))
         console.log(input)
     };
 
-    function handleCheck(e){
-        if (e.target.checked){
-            setInput({
-                ...input,
-                season: e.target.value
-            })
-        }
-    };
+    // function handleCheck(e){
+    //     if (e.target.checked){
+    //         setInput({
+    //             ...input,
+    //             season: e.target.value
+    //         })
+    //     }
+    // };
 
+    // esta funcion asigna al input de season el valor de la estación del año seleccionado
     function handleSelectSeason(e){
         setInput({
             ...input,
             season: e.target.value
         })
-        setErros(validate({
+        setErros(validate({ // valida que haya algo en el input
             ...input,
             [e.target.season] : e.target.value
         }))
     };
 
+    // esta funcion adigna al input de country, los paises que hayan sido seleccionados para adquirir la actividad turisticas
     function handleSelect(e){
         setInput({
             ...input,
             country: [...input.country, e.target.value]
         })
-        setErros(validate({
+        setErros(validate({ // valida que haya algo en el input
             ...input,
             [e.target.country] : e.target.value
         }))
     };
 
+    // esta funcion utiliza la función encargada de crear la actividad cuando se submitea el formulario con todos sus inputs llenos, y setea el input vación con los datos que contenga.
     function handleSubmit(e){
         e.preventDefault();
         console.log(input);
@@ -102,9 +109,10 @@ export default function ActivityCreate(){
             season: "",
             country: [] 
         });
-        history.push("/home") // ya se creo el personaje llevame al home
+        history.push("/home") // ya se creo la actividad llevame al home
     };
 
+    // esta función elimina un país seleccionado para adquirir la actividad
     function handleDelete(e){
         setInput({
             ...input,
@@ -114,15 +122,24 @@ export default function ActivityCreate(){
 
     useEffect(() => {
         dispatch(getCountries());
+        dispatch(getActivities());
     }, [dispatch])
 
     return(
         <div>
-            <Link to= "/home"><button>Volver</button></Link>
+        <div className="contenedorActivityCreate">
+
+            {/* BOTON VOLVER */}
+            <Link to= "/home"><button className="botonVolver">Volver</button></Link>
+
+            {/* TITULO */}
             <h1>Crear actividad</h1>
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <div>
-                    <label>Nombre</label>
+
+            {/* FORMULARIO */}
+            <form className="formularioCrear" onSubmit={(e) => handleSubmit(e)}>
+                {/* NOMBRE */}
+                <div className="nombre">
+                    <label>Nombre:</label>
                     <input 
                     type="text"
                     value={input.name}
@@ -133,11 +150,11 @@ export default function ActivityCreate(){
                         <p className="error">{errors.name}</p>
                     )}
                 </div>
-                <div>
+                {/* <div className="dificultad">
                     <label>Dificultad</label>
                     <input 
-                    // type="number"
-                    type="text"
+                    type="number"
+                    // type="text"
                     value={input.difficulty}
                     name= "difficulty" 
                     onChange={(e) => handleChange(e)}
@@ -145,9 +162,25 @@ export default function ActivityCreate(){
                     {errors.difficulty && (
                         <p className="error">{errors.difficulty}</p>
                     )}
+                </div> */}
+                {/* DIFICULTAD */}
+                <div className="dificultad">
+                    <label>Dificultad:</label>
+                    <input 
+                    type="range"
+                    value={input.difficulty}
+                    min="1"
+                    max="5"
+                    name= "difficulty" 
+                    onChange={(e) => handleChange(e)}
+                    />
+                    {errors.difficulty && (
+                        <p className="error">{errors.difficulty}</p>
+                    )}
                 </div>
-                <div>
-                    <label>Duración</label>
+                {/* DURACIÓN */}
+                <div className="duracion">
+                    <label>Duración:</label>
                     <input 
                     type="text"
                     value={input.duration}
@@ -185,9 +218,10 @@ export default function ActivityCreate(){
                     onChange={(e) => handleCheck(e)}
                     />Primavera</label>
                 </div> */}
-                <div>
-                    <label>Estación</label>
-                    <select onChange={(e) => handleSelectSeason(e)}>
+                {/* ESTACIÓN */}
+                <div className="estacion">
+                    <label>Estación:</label>
+                    <select onChange={(e) => handleSelectSeason(e)} className="selectEstacion">
                         <option disabled selected>Selecciona una estación</option>
                         <option value="Verano">Verano</option>
                         <option value="Otoño">Otoño</option>
@@ -198,30 +232,33 @@ export default function ActivityCreate(){
                         <p className="error">{errors.season}</p>
                     )}
                 </div>
-                <div>
-                    {/* <label>Seleccionar paises</label> */}
-                    <select onChange={(e) => handleSelect(e)}>
+                {/* PAISES */}
+                <div className="paises">
+                    <select onChange={(e) => handleSelect(e)} className="selectPaises">
                         <option disabled selected>Selecciona paises</option>
                         {countries.map((c) =>(
                             <option value={c.name}>{c.name}</option>
                         ))}
                     </select>
-                    {/* <ul><li>{input.country.map(e => e + ' ,')}</li></ul> */}
-                    {errors.country && (
+                    {
+                        errors.country && (
                         <p className="error">{errors.country}</p>
                     )}
                     
-                </div>   
+                </div>
+                {/* CREAR ACTIVIDAD    */}
                 <div>
-                <button type="submit">Crear actividad</button>
+                <button type="submit" className="botonCrear">Crear actividad</button>
                 </div>
             </form>
+            {/* PAISES SELECCIONADOS */}
             {input.country.map(el => 
                 <div className="divCountries">
                     <p>{el}</p>
                     <button className="botonX" onClick={() => handleDelete(el)}>x</button>
                 </div>
                 )}
+        </div>
         </div>
     )
 }

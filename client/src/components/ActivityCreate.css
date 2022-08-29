@@ -1,0 +1,109 @@
+.contenedorActivityCreate {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    margin: 1% 38%;
+    background-color: rgba(255, 228, 196, 0.800);
+    border-radius: 25px;
+}
+
+h1 {
+    margin: auto;
+}
+
+.formularioCrear {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.divCountries {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.botonX {
+    background-color: rgba(255, 130, 130, 0.733);
+    border-radius: 50%;
+    border-color: black;
+    border-width: 1px;
+}
+
+.botonX:hover {
+    background-color: rgb(255, 113, 113);;
+}
+
+.botonVolver {
+    background-color: rgba(255, 228, 196, 0.726);
+    border-radius: 20px;
+    border-color: black;
+    border-width: 1px;
+}
+
+.botonVolver:hover {
+    background-color: rgba(236, 162, 65, 0.726)
+}
+
+.botonCrear {
+    background-color: rgba(255, 228, 196, 0.726);
+    border-radius: 20px;
+    border-color: black;
+    border-width: 1px;
+}
+
+.botonCrear:hover {
+    background-color: rgba(236, 162, 65, 0.726)
+}
+
+.error {
+    color: red;
+}
+
+.nombre {
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.dificultad {
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.duracion {
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.estacion {
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.selectEstacion {
+    width: 177px;
+}
+
+.paises {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.selectPaises {
+    width: 300px;
+    height: 20px;
+}

@@ -10,12 +10,16 @@ const router = Router();
 // [ ] GET /countries:
 // En una primera instancia deberán traer todos los países desde restcountries y guardarlos en su propia base de datos y luego ya utilizarlos desde allí (Debe retonar sólo los datos necesarios para la ruta principal)
 // Obtener un listado de los paises.
+// [ ] GET /countries?name="...":
+// Obtener los países que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto)
+// Si no existe ningún país mostrar un mensaje adecuado
+
 
 const getApiInfo = async () => {
     try {
-        let api = (await axios.get("https://restcountries.com/v3.1/all"));
+        let api = (await axios.get("https://restcountries.com/v3.1/all")); // obtengo los datos de la api
         api = await api.data.map((c) => 
-            Country.findOrCreate({
+            Country.findOrCreate({ // en mi base de datos de paises, creo cada país con los datos que requiere la base de datos
             where: {
                 id: c.cca3,
                 name: c.translations.spa.official,
@@ -33,9 +37,9 @@ const getApiInfo = async () => {
     }   
 };
 
-getApiInfo();
+getApiInfo(); // ejecuto la función para que se cargue mi base de datos
 
-
+// busco todos los paises incluyendo sus acitvidades con sus atributos
 router.get('/countries', async (req, res) => {
    const name = req.query.name // esto es por si me pasan el nombre por query
    let countriesTotal = await Country.findAll({
@@ -47,7 +51,7 @@ router.get('/countries', async (req, res) => {
             }
         }
     });
-   if(name){
+   if(name){ // si me pasan el nombre por query 
     let countryName = await countriesTotal.filter(c => c.name.toLowerCase().includes(name.toLowerCase()));
     countryName.length ? // encontraste algo?
     res.status(200).send(countryName) : // si enconraste manda esto
@@ -63,6 +67,7 @@ router.get('/countries', async (req, res) => {
 // Debe traer solo los datos pedidos en la ruta de detalle de país
 // Incluir los datos de las actividades turísticas correspondientes
 
+// busca el pais si le pasan el id por params incluyendo sus actividades con sus atributos
 router.get("/countries/:id", async (req, res) =>{
     const { id } = req.params;
     const totalCountries = await Country.findAll({
@@ -81,9 +86,5 @@ router.get("/countries/:id", async (req, res) =>{
         res.status(404).send('No se encontró el país')
     }
     })
-
-// [ ] GET /countries?name="...":
-// Obtener los países que coincidan con el nombre pasado como query parameter (No necesariamente tiene que ser una matcheo exacto)
-// Si no existe ningún país mostrar un mensaje adecuado
 
 module.exports = router;

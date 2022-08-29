@@ -1,6 +1,7 @@
 import axios from "axios";
 // la logica se arma en reducers
 
+// esta funcion obtiene los datos de todos los paises
 export function getCountries(){
     return async function(dispatch){
         var json = await axios.get("http://localhost:3001/countries");
@@ -11,6 +12,7 @@ export function getCountries(){
     };
 }
 
+// esta funcion obtiene los datos de todas las actividades
 export function getActivities(){
     return async function(dispatch){
         var json = await axios.get("http://localhost:3001/activities");
@@ -21,6 +23,7 @@ export function getActivities(){
     }
 }
 
+// esta funcion crea una actividad(post) en el componente ActivityCreate
 export function postActivity(payload){
     return async function(dispatch){
         var json = await axios.post("http://localhost:3001/activities", payload);
@@ -28,6 +31,7 @@ export function postActivity(payload){
     }
 }
 
+// esta funcion obtiene un pais basandose el nombre pasado por query
 export function getNameCountries(name){
     return async function(dispatch){
         try {
@@ -42,6 +46,7 @@ export function getNameCountries(name){
     }
 }
 
+// esta funcion filtra los paises por continente
 export function filterCountriesByContinent(payload){
     console.log(payload)
     return ({
@@ -50,13 +55,15 @@ export function filterCountriesByContinent(payload){
     })
 }
 
-export function filterCreated(payload){
+// esta funcion filtra los paises por actividades
+export function filterActivityCreated(payload){
     return {
-        type: "FILTER_CREATED",
+        type: "FILTER_BY_ACTIVITY",
         payload
     }
 }
 
+// esta funcion ordena los paises por nombre
 export function orderByName(payload){
     return {
         type: "ORDER_BY_NAME",
@@ -64,6 +71,7 @@ export function orderByName(payload){
     }
 }
 
+// esta funcion ordena los paises por poblacion
 export function orderByPopulation(payload){
     return {
         type: "ORDER_BY_POPULATION",
@@ -71,6 +79,7 @@ export function orderByPopulation(payload){
     }
 }
 
+// esta funcion obtiene los detalles de un pais basado en su id
 export function getDetail (id){
     return async function (dispatch){
         try{
@@ -85,6 +94,15 @@ export function getDetail (id){
         }
     }
 }
+
+// esta funcion es para el paginado
+export const setCurrentPage = (payload) => {
+    return {
+      type: "SET_CURRENT_PAGE",
+      payload,
+    };
+  };
+
 
 // export function getDetail (id) {
 //     return function (dispatch) {

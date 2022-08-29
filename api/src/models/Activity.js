@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
 // Dificultad (Entre 1 y 5)
 // Duración
 // Temporada (Verano, Otoño, Invierno o Primavera)
-sequelize.define('activity', 
+sequelize.define('activity', // defino mi modelo activity con sus distintas propiedades
     {
         name: {
             type: DataTypes.STRING,
