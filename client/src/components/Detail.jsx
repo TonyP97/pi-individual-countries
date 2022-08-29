@@ -33,30 +33,18 @@ export default function Detail(props){
                 myCountry.length? // si encontro el detalle del país solicitado, lo muestro
                 <div className="detalle">
                     <img src={myCountry[0].flags} alt="Not found" className="imagen"/>
-                    <h2>País: {myCountry[0].name}</h2>
+                    <h2>{myCountry[0].name}</h2>
                     <h3>{myCountry[0].id}</h3>
                     <h3>Continente: {myCountry[0].continents}</h3>
                     <h4>Capital: {myCountry[0].capital}</h4>
                     <h5>Subregión: {myCountry[0].subregion}</h5>
                     <p>Área: {myCountry[0].area}km2</p>
                     <p>Población: {myCountry[0].population}</p>
-                    <h5>Actividades turísticas: {myCountry[0].activities.length? myCountry[0].activities.map(el => `||-${el.name} -Dificultad:${el.difficulty} -Duración:${el.duration} -Estación:${el.season}|| `) : "Ninguna por el momento"} </h5>
+                    <h5>Actividades turísticas: {myCountry[0].activities.length? myCountry[0].activities.map(el => `● ${el.name} -Dificultad:${el.difficulty} -Duración:${el.duration} -Estación:${el.season} `) : "Ninguna por el momento"} </h5>
                 </div> 
                 : <p>Loading...</p> // sino muestro un Loading...
                 
             }
-                
-                {/* <div>
-                {
-                myCountry.activities.map(el => {
-                    return (
-                        <div>
-                            <ActivityDetail name={el.name} id={el.id} difficulty={el.difficulty} duration={el.duration} season={el.season}></ActivityDetail>
-                        </div>
-                    )
-                    })
-                }
-                </div> */}
             
 
             <div>

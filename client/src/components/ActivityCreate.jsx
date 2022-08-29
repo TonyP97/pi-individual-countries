@@ -84,7 +84,7 @@ export default function ActivityCreate(){
         }))
     };
 
-    // esta funcion adigna al input de country, los paises que hayan sido seleccionados para adquirir la actividad turisticas
+    // esta funcion asigna al input de country, los paises que hayan sido seleccionados para adquirir la actividad turisticas
     function handleSelect(e){
         setInput({
             ...input,
@@ -130,7 +130,7 @@ export default function ActivityCreate(){
         <div className="contenedorActivityCreate">
 
             {/* BOTON VOLVER */}
-            <Link to= "/home"><button className="botonVolver">Volver</button></Link>
+            <Link to= "/home"><button className="botonVolverr">Volver</button></Link>
 
             {/* TITULO */}
             <h1>Crear actividad</h1>
@@ -141,6 +141,7 @@ export default function ActivityCreate(){
                 <div className="nombre">
                     <label>Nombre:</label>
                     <input 
+                    className="inputnombre"
                     type="text"
                     value={input.name}
                     name= "name" 
@@ -167,6 +168,7 @@ export default function ActivityCreate(){
                 <div className="dificultad">
                     <label>Dificultad:</label>
                     <input 
+                    className="inputrange"
                     type="range"
                     value={input.difficulty}
                     min="1"
@@ -182,6 +184,7 @@ export default function ActivityCreate(){
                 <div className="duracion">
                     <label>Duración:</label>
                     <input 
+                    className="inputduracion"
                     type="text"
                     value={input.duration}
                     name= "duration" 
@@ -248,7 +251,7 @@ export default function ActivityCreate(){
                 </div>
                 {/* CREAR ACTIVIDAD    */}
                 <div>
-                <button type="submit" className="botonCrear">Crear actividad</button>
+                <button type="submit" className="botonCrear" disabled={!input.name || !input.difficulty || !input.duration || !input.season || !input.country}>Crear actividad</button>
                 </div>
             </form>
             {/* PAISES SELECCIONADOS */}

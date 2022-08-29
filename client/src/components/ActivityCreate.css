@@ -35,25 +35,24 @@ h1 {
     background-color: rgb(255, 113, 113);;
 }
 
-.botonVolver {
+.botonVolverr {
     background-color: rgba(255, 228, 196, 0.726);
     border-radius: 20px;
-    border-color: black;
-    border-width: 1px;
+    border: 3px solid rgb(236, 162, 65,  0.726)
 }
 
-.botonVolver:hover {
+.botonVolverr:hover {
     background-color: rgba(236, 162, 65, 0.726)
 }
 
 .botonCrear {
     background-color: rgba(255, 228, 196, 0.726);
     border-radius: 20px;
-    border-color: black;
-    border-width: 1px;
+    border: 3px solid rgb(236, 162, 65,  0.726);
+    margin-top: 5px;
 }
 
-.botonCrear:hover {
+.botonCrear:hover:enabled {
     background-color: rgba(236, 162, 65, 0.726)
 }
 
@@ -65,14 +64,36 @@ h1 {
     display: flex;
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 4px;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.inputnombre {
+    background-color: rgb(255, 228, 196);
+    border-radius: 5px;
+    border: 2px solid rgb(236, 162, 65)
+}
+
+.inputnombre:focus {
+    outline: none;
+}
+
+.inputduracion {
+    background-color: rgb(255, 228, 196);
+    border-radius: 5px;
+    border: 2px solid rgb(236, 162, 65)
+}
+
+.inputduracion:focus {
+    outline: none;
 }
 
 .dificultad {
     display: flex;
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 4px;
     justify-content: space-between;
     flex-wrap: wrap;
 }
@@ -81,6 +102,7 @@ h1 {
     display: flex;
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 4px;
     justify-content: space-between;
     flex-wrap: wrap;
 }
@@ -89,12 +111,20 @@ h1 {
     display: flex;
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 4px;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .selectEstacion {
     width: 177px;
+    border-radius: 5px;
+    border: 2px solid rgb(236, 162, 65);
+    background-color: rgb(255, 228, 196);
+}
+
+.selectEstacion:focus {
+    outline: none;
 }
 
 .paises {
@@ -106,4 +136,11 @@ h1 {
 .selectPaises {
     width: 300px;
     height: 20px;
+    border-radius: 5px;
+    border: 2px solid rgb(236, 162, 65);
+    background-color: rgb(255, 228, 196);
+}
+
+.selectPaises:focus {
+    outline: none;
 }

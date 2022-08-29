@@ -85,18 +85,21 @@ export default function Home(){
     // RENDERIZADO
     return (
         <div>
+            <div className="cabecera">
             {/* BOTON VOLVER */}
             <Link to= "/"><button className="botonVolver">Volver</button></Link>
             
             {/* TÍTULO */}
-            <h1>PI Countries</h1>
+            <h1 className="titulito">PI Countries</h1>
 
             {/* CREAR ACTIVIDADES */}
             <Link to = "/activities"><button className="botonCrearActividad">Crear actividad</button></Link>
+
+            </div>
             
             {/* FILTROS */}
             <div className="filtros">
-                <select onChange={e => {handleFilterContinent(e)}}>
+                <select className="continentselect" onChange={e => {handleFilterContinent(e)}}>
                     {/* continentes */}
                     <option hidden selected>Filtrar por continente</option>
                     <option value="Todos">Todos</option>
@@ -109,7 +112,7 @@ export default function Home(){
                     <option value="Oceania">Oceanía</option>
                 </select>
 
-                <select onChange={e => {handlefilterActivityCreated(e)}}>
+                <select className="activityselect" onChange={e => {handlefilterActivityCreated(e)}}>
                     {/* actividad */}
                     <option value="sin actividad" hidden selected>Filtrar por actividad turística</option>
                         {activities.map((act)=>(
@@ -117,14 +120,14 @@ export default function Home(){
                      ))}
                 </select>
 
-                <select onChange={e => {handleOrderByName(e)}}>
+                <select className="ordenalfbselect" onChange={e => {handleOrderByName(e)}}>
                     {/* orden alfabetico */}
                     <option hidden selected>Orden alfabético</option>
                     <option value="ascalf">Ascendente en orden alfabético</option>
                     <option value="descalf">Descendente en orden alfabético</option>
                 </select>
 
-                <select onChange={e => {handleOrderByPopulation(e)}}>
+                <select className="ordenpoblselect" onChange={e => {handleOrderByPopulation(e)}}>
                     {/* orden poblacional */}
                     <option hidden selected>Orden poblacional</option>
                     <option value="ascpob">Ascendente por cantidad de población</option>
@@ -136,9 +139,7 @@ export default function Home(){
             </div>
             
             {/* BUSCADOR */}
-            <div className="buscador">
                 <SearchBar/>
-            </div>
 
             {/* CARTAS */}
             <div className="contenedor">

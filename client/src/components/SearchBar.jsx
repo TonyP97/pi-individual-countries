@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getNameCountries } from "../actions";
+import "./SearchBar.css"
 
 // este componente se renderiza en el Home.jsx y nos permite buscar paises por nombre
 export default function SearchBar(){
@@ -20,12 +21,13 @@ export default function SearchBar(){
     }
 
     return(
-        <div>
+        <div className="buscador">
             <input 
+            className="inputbuscar"
             type="text" 
             placeholder="Buscar..."  
             onChange={(e) => handleInputChange(e)}/>
-            <button type="submit" onClick={(e) => handleSubmit(e)} >Buscar</button>
+            <button className="botonbuscador" type="submit" onClick={(e) => handleSubmit(e)} >Buscar</button>
         </div>
     )
 }
