@@ -31,7 +31,7 @@ export default function Home(){
     const activities = useSelector((state) => state.activities)
     const page = useSelector((state) => state.page)
     
-    // constantes paginado
+    // CONSTANTES PAGINADO
     const countriesPerPage = 10; // 10 paises por página
     const indexOfLastCountrie = page * countriesPerPage - 1; // el index del ultimo país, se resta 1 porque en la primer página son 9 
     const indexOfFirstCountrie = page === 1 ? indexOfLastCountrie - (countriesPerPage - 1) : indexOfLastCountrie - countriesPerPage; // si es la primer página, se muestran 9, sino 10
@@ -99,9 +99,9 @@ export default function Home(){
             
             {/* FILTROS */}
             <div className="filtros">
-                <select className="continentselect" onChange={e => {handleFilterContinent(e)}}>
+                <select className="continentselect" onChange={e => {handleFilterContinent(e)}} defaultValue="Filtrar por continente">
                     {/* continentes */}
-                    <option hidden selected>Filtrar por continente</option>
+                    <option value="Filtrar por continente" disabled>Filtrar por continente</option>
                     <option value="Todos">Todos</option>
                     <option value="Antarctica">Antártida</option>
                     <option value="South America">América del sur</option>
@@ -112,24 +112,24 @@ export default function Home(){
                     <option value="Oceania">Oceanía</option>
                 </select>
 
-                <select className="activityselect" onChange={e => {handlefilterActivityCreated(e)}}>
+                <select className="activityselect" onChange={e => {handlefilterActivityCreated(e)}} defaultValue="Filtrar por actividad turística">
                     {/* actividad */}
-                    <option value="sin actividad" hidden selected>Filtrar por actividad turística</option>
+                    <option value="Filtrar por actividad turística" disabled>Filtrar por actividad turística</option>
                         {activities.map((act)=>(
                     <option value={act.name}>{act.name}</option>
                      ))}
                 </select>
 
-                <select className="ordenalfbselect" onChange={e => {handleOrderByName(e)}}>
+                <select className="ordenalfbselect" onChange={e => {handleOrderByName(e)}} defaultValue="Orden alfabético">
                     {/* orden alfabetico */}
-                    <option hidden selected>Orden alfabético</option>
+                    <option value="Orden alfabético" disabled>Orden alfabético</option>
                     <option value="ascalf">Ascendente en orden alfabético</option>
                     <option value="descalf">Descendente en orden alfabético</option>
                 </select>
 
-                <select className="ordenpoblselect" onChange={e => {handleOrderByPopulation(e)}}>
+                <select className="ordenpoblselect" onChange={e => {handleOrderByPopulation(e)}} defaultValue="Orden poblacional">
                     {/* orden poblacional */}
-                    <option hidden selected>Orden poblacional</option>
+                    <option value="Orden poblacional" disabled>Orden poblacional</option>
                     <option value="ascpob">Ascendente por cantidad de población</option>
                     <option value="descpob">Descendente por cantidad de población</option>
                 </select>
@@ -139,10 +139,9 @@ export default function Home(){
             </div>
             
             {/* BUSCADOR */}
-                <SearchBar/>
+                <SearchBar key={null}/>
 
             {/* CARTAS */}
-            <div className="contenedor">
             <div className="cartas">
                 {
                 // allCountries?.map((c) => {
@@ -150,12 +149,11 @@ export default function Home(){
                     return (
                         <Fragment>
                             <Link to={"/countries/" + c.id} className="carta">
-                                <Card name={c.name} id={c.id} continents={c.continents} flags={c.flags}/>
+                                <Card key={c.name} name={c.name} id={c.id} continents={c.continents} flags={c.flags}/>
                             </Link>
                         </Fragment>                            
                     )})
                 }
-            </div>
             </div>
 
             {/* PAGINACIÓN */}

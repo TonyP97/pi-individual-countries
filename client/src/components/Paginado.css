@@ -96,3 +96,8 @@
 .botonultima:hover:enabled {
     background-color: rgba(236, 162, 65, 0.726);
 }
+
+.spannumero {
+    margin-left: 3px;
+    margin-right: 3px;
+}

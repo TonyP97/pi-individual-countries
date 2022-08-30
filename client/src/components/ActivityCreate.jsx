@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment} from "react";
+import React, {useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { postActivity, getCountries, getActivities } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +39,6 @@ export default function ActivityCreate(){
     const history = useHistory(); // esto sirve para redirigir 
     const countries = useSelector((state) => state.countries); // traigo todo lo que esta en mi state de countries
     const [errors, setErros] = useState({});
-    const activities = useSelector((state) => state.activities) // traigo todo lo que esta en mi state de activities
 
     // declaro mi input con los diferentes campos que deben ser modificados/los campos que son requeridos por la actividad
     const [input, setInput] = useState({
@@ -224,8 +223,8 @@ export default function ActivityCreate(){
                 {/* ESTACIÓN */}
                 <div className="estacion">
                     <label>Estación:</label>
-                    <select onChange={(e) => handleSelectSeason(e)} className="selectEstacion">
-                        <option disabled selected>Selecciona una estación</option>
+                    <select onChange={(e) => handleSelectSeason(e)} className="selectEstacion" defaultValue="Selecciona una estación">
+                        <option value="Selecciona una estación" disabled>Selecciona una estación</option>
                         <option value="Verano">Verano</option>
                         <option value="Otoño">Otoño</option>
                         <option value="Invierno">Invierno</option>
@@ -237,10 +236,10 @@ export default function ActivityCreate(){
                 </div>
                 {/* PAISES */}
                 <div className="paises">
-                    <select onChange={(e) => handleSelect(e)} className="selectPaises">
-                        <option disabled selected>Selecciona paises</option>
+                    <select onChange={(e) => handleSelect(e)} className="selectPaises" defaultValue="Selecciona paises">
+                        <option value="Selecciona paises" disabled>Selecciona paises</option>
                         {countries.map((c) =>(
-                            <option value={c.name}>{c.name}</option>
+                            <option key={c.name} value={c.name}>{c.name}</option>
                         ))}
                     </select>
                     {

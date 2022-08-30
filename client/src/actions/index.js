@@ -42,9 +42,26 @@ export function getNameCountries(name){
             })
         } catch(error){
             console.log(error)
+            alert("No se encontre el país, prueba con los acentos correspondientes")
         }
     }
 }
+
+// export function getNameCountries(name){
+//     return function(dispatch){
+//         try {
+//             axios.get("http://localhost:3001/countries?name=" + name)
+//             .then ((response) =>{
+//                 return dispatch({
+//                     type: "GET_NAME_COUNTRIES",
+//                     payload: response.data
+//                 })
+//             })
+//         } catch(error){
+//             console.log(error)
+//         }
+//     }
+// }
 
 // esta funcion filtra los paises por continente
 export function filterCountriesByContinent(payload){

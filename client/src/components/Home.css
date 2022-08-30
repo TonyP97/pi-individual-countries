@@ -78,10 +78,6 @@
     outline: none
 }
 
-.contenedor {
-    padding: 0px 50px;
-}
-
 .cartas {
     display: grid;
     grid-template-columns: repeat(1, 1fr);

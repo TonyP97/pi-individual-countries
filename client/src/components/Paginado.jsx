@@ -23,7 +23,7 @@ return (
     <div className="contenedorPaginado">
         <ul className="paginado">
             {pageNumbers?.map((page) => (
-            <li className="number">
+            <li key={page} className="number">
                 <button className="botonPage" onClick={() => changePage(page)}>
                     {page}
                 </button>
@@ -39,7 +39,7 @@ return (
                 <button className="botonprimer" onClick={() => changePage(1)} disabled={page === 1}>Primera</button>
                 <button className="botonatras" onClick={() => changePage(page - 1)} disabled={page === 1}>Anterior</button>
             </div>
-            <span>
+            <span className="spannumero">
                 Página {page} de {pageNumbers.length}
             </span>
             <div>

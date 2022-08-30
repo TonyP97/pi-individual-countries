@@ -1,9 +1,8 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail } from "../actions";
 import { useEffect } from "react";
-import ActivityDetail from "./ActivityDetailCard"
 import "./Detail.css"
 
 // Ruta de detalle de país: debe contener

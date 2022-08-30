@@ -39,7 +39,7 @@ function rootReducer (state= initialState, action) {
             }
         // si me pide filtar por actividad y no tengo, la unica opcion es ver todos los paises. En caso de tener actividades, filtro todos los paises basandose en la actividad que desea filtar y devuelvo solo los que la incluyan
         case "FILTER_BY_ACTIVITY":
-            const filter = action.payload === "sin actividad"?state.allCountries : state.allCountries.filter((c) => {
+            const filter = action.payload === "Filtrar por actividad turística"?state.allCountries : state.allCountries.filter((c) => {
                 const activities = c.activities.map((a) => a.name)
                 return activities.includes(action.payload)
             })
