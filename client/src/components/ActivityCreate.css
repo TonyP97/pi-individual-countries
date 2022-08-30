@@ -27,8 +27,10 @@ h1 {
 .botonX {
     background-color: rgba(255, 130, 130, 0.733);
     border-radius: 50%;
-    border-color: black;
+    border-color: red;
     border-width: 1px;
+    color: red;
+    font-size: small;
 }
 
 .botonX:hover {

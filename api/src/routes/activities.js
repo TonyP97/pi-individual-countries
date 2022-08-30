@@ -36,13 +36,13 @@ router.post("/activities", async (req, res) => {
             season,
         });
     
-        const findActivity = await Country.findAll({
+        const findCountry = await Country.findAll({
             where: {
                 name: country,
             }
         });
 
-        activityCreate.addCountries(findActivity); // trae el name del pais
+        activityCreate.addCountries(findCountry); // trae el name del pais
         res.status(200).json("La actividad ha sido creada correctamente.")
     } catch (error) {
         res.status(400).json({error: "Error al crear la actividad indicada."})
