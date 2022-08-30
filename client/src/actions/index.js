@@ -120,6 +120,16 @@ export const setCurrentPage = (payload) => {
     };
   };
 
+// limpiar filtros intento
+export function filterClean(){
+return async function(dispatch){
+    var json = await axios.get("http://localhost:3001/countries");
+    return dispatch({
+        type: "FILTER_CLEAN",
+        payload: json.data
+    })
+};
+}
 
 // export function getDetail (id) {
 //     return function (dispatch) {

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 // importo los hooks de react redux
 import { useDispatch, useSelector } from "react-redux";
 // importo las actions
-import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage } from "../actions";
+import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage, filterClean } from "../actions";
 import { Link } from "react-router-dom";
 // importo los componentes
 import Card from "./Card";
@@ -46,11 +46,11 @@ export default function Home(){
     
     // HANDLES
     // esta funcion me recarga los paises nuevamente y además me hace un reload de la página, lo utilizo para "limpiar los filtros"
-    function handleClick(e){
-        e.preventDefault();
-        dispatch(getCountries);
-        window.location.reload();
-    }
+    // function handleClick(e){
+    //     e.preventDefault();
+    //     dispatch(getCountries);
+    //     window.location.reload();
+    // }
     
     // esta funcion actua sobre el div de filtros, se encarga de filtrar los continentes por nombre utilizando la funcion que trae desde las actions
     function handleFilterContinent(e){
@@ -82,6 +82,16 @@ export default function Home(){
         setOrden(`Ordenado ${e.target.value}`)
     }
 
+    // limpiar filtros
+    function handleFilterClean(e){
+        e.preventDefault();
+        dispatch(filterClean());
+        document.getElementById("continentselect").value="Filtrar por continente";
+        document.getElementById("activityselect").value="Filtrar por actividad turística";
+        document.getElementById("ordenalfbselect").value="Orden alfabético";
+        document.getElementById("ordenpoblselect").value="Orden poblacional";
+    }
+
     // RENDERIZADO
     return (
         <div>
@@ -99,7 +109,7 @@ export default function Home(){
             
             {/* FILTROS */}
             <div className="filtros">
-                <select className="continentselect" onChange={e => {handleFilterContinent(e)}} defaultValue="Filtrar por continente">
+                <select id="continentselect" className="continentselect" onChange={e => {handleFilterContinent(e)}} defaultValue="Filtrar por continente">
                     {/* continentes */}
                     <option value="Filtrar por continente" disabled>Filtrar por continente</option>
                     <option value="Todos">Todos</option>
@@ -112,7 +122,7 @@ export default function Home(){
                     <option value="Oceania">Oceanía</option>
                 </select>
 
-                <select className="activityselect" onChange={e => {handlefilterActivityCreated(e)}} defaultValue="Filtrar por actividad turística">
+                <select id="activityselect" className="activityselect" onChange={e => {handlefilterActivityCreated(e)}} defaultValue="Filtrar por actividad turística">
                     {/* actividad */}
                     <option value="Filtrar por actividad turística" disabled>Filtrar por actividad turística</option>
                         {activities.map((act)=>(
@@ -120,14 +130,14 @@ export default function Home(){
                      ))}
                 </select>
 
-                <select className="ordenalfbselect" onChange={e => {handleOrderByName(e)}} defaultValue="Orden alfabético">
+                <select id="ordenalfbselect" className="ordenalfbselect" onChange={e => {handleOrderByName(e)}} defaultValue="Orden alfabético">
                     {/* orden alfabetico */}
                     <option value="Orden alfabético" disabled>Orden alfabético</option>
                     <option value="ascalf">Ascendente en orden alfabético</option>
                     <option value="descalf">Descendente en orden alfabético</option>
                 </select>
 
-                <select className="ordenpoblselect" onChange={e => {handleOrderByPopulation(e)}} defaultValue="Orden poblacional">
+                <select id="ordenpoblselect" className="ordenpoblselect" onChange={e => {handleOrderByPopulation(e)}} defaultValue="Orden poblacional">
                     {/* orden poblacional */}
                     <option value="Orden poblacional" disabled>Orden poblacional</option>
                     <option value="ascpob">Ascendente por cantidad de población</option>
@@ -135,7 +145,8 @@ export default function Home(){
                 </select>
 
                 {/* LIMPIAR FILTROS */}
-                <button onClick={e => {handleClick(e)}} className="botonLimpiar">Limpiar filtros</button>
+                {/* <button onClick={e => {handleClick(e)}} className="botonLimpiar">Limpiar filtros</button> */}
+                <button onClick={e => {handleFilterClean(e)}} className="botonLimpiar">Limpiar filtros</button>
             </div>
             
             {/* BUSCADOR */}

@@ -110,10 +110,16 @@ function rootReducer (state= initialState, action) {
             }
         // en el caso de cambiar de página, setea la página
         case "SET_CURRENT_PAGE":
-        return{
-            ...state,
-            page: action.payload
-        }
+            return{
+                ...state,
+                page: action.payload
+            }
+        case "FILTER_CLEAN":
+            return {
+                ...state,
+                countries: action.payload,
+                allCountries: action.payload
+            }
         default: 
             return state;
         

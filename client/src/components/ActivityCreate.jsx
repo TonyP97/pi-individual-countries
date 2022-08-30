@@ -184,7 +184,9 @@ export default function ActivityCreate(){
                     <label>Duración:</label>
                     <input 
                     className="inputduracion"
-                    type="text"
+                    type="number"
+                    min="1"
+                    max="24"
                     value={input.duration}
                     name= "duration" 
                     onChange={(e) => handleChange(e)}

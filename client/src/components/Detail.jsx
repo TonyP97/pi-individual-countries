@@ -39,7 +39,7 @@ export default function Detail(props){
                     <h5>Subregión: {myCountry[0].subregion}</h5>
                     <p>Área: {myCountry[0].area}km2</p>
                     <p>Población: {myCountry[0].population}</p>
-                    <h5>Actividades turísticas: {myCountry[0].activities.length? myCountry[0].activities.map(el => `● ${el.name} -Dificultad:${el.difficulty} -Duración:${el.duration}hs -Estación:${el.season} `) : "Ninguna por el momento"} </h5>
+                    <h5>Actividades turísticas: {myCountry[0].activities.length? myCountry[0].activities.map(el => `● ${el.name} -Dificultad: ${el.difficulty} -Duración: ${el.duration}hs -Estación: ${el.season} `) : "Ninguna por el momento"} </h5>
                 </div> 
                 : <p>Loading...</p> // sino muestro un Loading...
                 
