@@ -74,7 +74,7 @@ h1 {
 .inputnombre {
     background-color: rgb(255, 228, 196);
     border-radius: 5px;
-    border: 2px solid rgb(236, 162, 65)
+    border: 2px solid rgb(236, 162, 65);
 }
 
 .inputnombre:focus {
@@ -84,7 +84,7 @@ h1 {
 .inputduracion {
     background-color: rgb(255, 228, 196);
     border-radius: 5px;
-    border: 2px solid rgb(236, 162, 65)
+    border: 2px solid rgb(236, 162, 65);
 }
 
 .inputduracion:focus {

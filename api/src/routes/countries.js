@@ -85,6 +85,6 @@ router.get("/countries/:id", async (req, res) =>{
         res.status(200).json(countriesID) : // si encontraste manda esto
         res.status(404).send('No se encontró el país')
     }
-    })
+    });
 
 module.exports = router;

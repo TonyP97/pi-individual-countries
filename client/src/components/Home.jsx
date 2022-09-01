@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 // importo los hooks de react redux
 import { useDispatch, useSelector } from "react-redux";
 // importo las actions
-import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage, filterClean } from "../actions";
+import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage} from "../actions";
 import { Link } from "react-router-dom";
 // importo los componentes
 import Card from "./Card";
@@ -85,7 +85,7 @@ export default function Home(){
     // limpiar filtros
     function handleFilterClean(e){
         e.preventDefault();
-        dispatch(filterClean());
+        dispatch(getCountries());
         document.getElementById("continentselect").value="Filtrar por continente";
         document.getElementById("activityselect").value="Filtrar por actividad turística";
         document.getElementById("ordenalfbselect").value="Orden alfabético";

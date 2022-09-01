@@ -51,19 +51,19 @@ function rootReducer (state= initialState, action) {
         case "ORDER_BY_NAME":
             const sortedArr = action.payload === "ascalf" ? state.countries.sort((a, b) => { // esto va comparando los paises y los va posicionando a la derecha o a la izquierda dependiendo de cual encuentre primero.
                 // si el valor es ascendente hace esto
-                if (a.name > b.name){
+                if (a.name.toLowerCase() > b.name.toLowerCase()){
                     return 1
                 }
-                if (b.name > a.name){
+                if (b.name.toLowerCase() > a.name.toLowerCase()){
                     return -1
                 }
                 return 0
             })  : // si el valor es descendente hace esto
             state.countries.sort((a, b) => {
-                if (a.name > b.name){
+                if (a.name.toLowerCase() > b.name.toLowerCase()){
                     return -1
                 }
-                if (b.name > a.name){
+                if (b.name.toLowerCase() > a.name.toLowerCase()){
                     return 1
                 }
                 return 0
@@ -114,12 +114,7 @@ function rootReducer (state= initialState, action) {
                 ...state,
                 page: action.payload
             }
-        case "FILTER_CLEAN":
-            return {
-                ...state,
-                countries: action.payload,
-                allCountries: action.payload
-            }
+        // default
         default: 
             return state;
         

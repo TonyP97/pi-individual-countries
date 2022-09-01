@@ -46,6 +46,7 @@ router.post("/activities", async (req, res) => {
         res.status(200).json("La actividad ha sido creada correctamente.")
     } catch (error) {
         res.status(400).json({error: "Error al crear la actividad indicada."})
+        console.log(error)
     }
 });
 

@@ -1,6 +1,6 @@
-import React, {useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { postActivity, getCountries, getActivities } from "../actions";
+import { postActivity } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./ActivityCreate.css" 
 
@@ -28,7 +28,7 @@ function validate(input){ // esta función valida, si falta algo en algun input,
     else if(!input.season){
         errors.season = "Se requiere una estación del año"
     }
-    else if(!input.country){
+    else if(!input.country.length){
         errors.country = "Se requiere al menos un país"
     }
     return errors
@@ -84,11 +84,18 @@ export default function ActivityCreate(){
     };
 
     // esta funcion asigna al input de country, los paises que hayan sido seleccionados para adquirir la actividad turisticas
+    // verifico que no se repita el pais
     function handleSelect(e){
-        setInput({
-            ...input,
-            country: [...input.country, e.target.value]
-        })
+        if(input.country.includes(e.target.value)){
+            setInput({
+                ...input,
+            })
+        } else {
+            setInput({
+                ...input,
+                country: [...input.country, e.target.value]
+            })
+        }   
         setErros(validate({ // valida que haya algo en el input
             ...input,
             [e.target.country] : e.target.value
@@ -119,10 +126,6 @@ export default function ActivityCreate(){
         })
     }
 
-    useEffect(() => {
-        dispatch(getCountries());
-        dispatch(getActivities());
-    }, [dispatch])
 
     return(
         <div>
@@ -252,7 +255,7 @@ export default function ActivityCreate(){
                 </div>
                 {/* CREAR ACTIVIDAD    */}
                 <div>
-                <button type="submit" className="botonCrear" disabled={!input.name || !input.difficulty || !input.duration || !input.season || !input.country}>Crear actividad</button>
+                <button id="botonCrear" type="submit" className="botonCrear" disabled={!input.name || !input.difficulty || !input.duration || !input.season || !input.country.length }>Crear actividad</button>
                 </div>
             </form>
             {/* PAISES SELECCIONADOS */}
