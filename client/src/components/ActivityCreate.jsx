@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { postActivity } from "../actions";
+import { postActivity, getCountries } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./ActivityCreate.css" 
 
@@ -126,10 +126,15 @@ export default function ActivityCreate(){
         })
     }
 
+    // para que al actualizar la página se cargue la lista de países en el select
+    useEffect(()=>{
+        dispatch(getCountries())
+    }, [dispatch])
+
 
     return(
-        <div>
-        <div className="contenedorActivityCreate">
+        <div key="contenedorActiviCreate">
+        <div key="contenedorActivityCreate" className="contenedorActivityCreate">
 
             {/* BOTON VOLVER */}
             <Link to= "/home"><button className="botonVolverr">Volver</button></Link>
