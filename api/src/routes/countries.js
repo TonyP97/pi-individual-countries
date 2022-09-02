@@ -42,23 +42,26 @@ getApiInfo(); // ejecuto la función para que se cargue mi base de datos
 // busco todos los paises incluyendo sus acitvidades con sus atributos
 router.get('/countries', async (req, res) => {
    const name = req.query.name // esto es por si me pasan el nombre por query
-   let countriesTotal = await Country.findAll({
-        include:{
-            model: Activity,
-            attributes: ["name", "difficulty", "duration", "season"],
-            through:{
-                attributes: [],
+   try {
+        let countriesTotal = await Country.findAll({
+            include:{
+                model: Activity,
+                attributes: ["name", "difficulty", "duration", "season"],
+                through:{
+                    attributes: [],
+                }
             }
-        }
-    });
-   if(name){ // si me pasan el nombre por query 
-    let countryName = await countriesTotal.filter(c => c.name.toLowerCase().includes(name.toLowerCase()));
-    countryName.length ? // encontraste algo?
-    res.status(200).send(countryName) : // si enconraste manda esto
-    res.status(404).send("No se encontró el país.")
-   }
-   else { // si no hay query
-    res.status(200).send(countriesTotal)
+        });
+    if(name){ // si me pasan el nombre por query 
+        let countryName = await countriesTotal.filter(c => c.name.toLowerCase().includes(name.toLowerCase()));
+        countryName.length ? // encontraste algo?
+        res.status(200).send(countryName) : // si enconraste manda esto
+        res.status(404).send("No se encontró el país.")
+    } else { // si no hay query
+        res.status(200).send(countriesTotal)
+    }
+   } catch (error) {
+        console.log(error)
    }
 });
 
