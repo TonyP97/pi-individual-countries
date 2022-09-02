@@ -162,10 +162,6 @@ export default function ActivityCreate(){
                     name= "name" 
                     onChange={(e) => handleChange(e)}
                     />
-                    {errors.nameexiste && (
-                        <p>{errors.nameexiste}</p>
-                    )
-                    }
                     {errors.name && (
                         <p className="error">{errors.name}</p>
                     )}
