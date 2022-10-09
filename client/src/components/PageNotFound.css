@@ -1,0 +1,14 @@
+.notFound404 {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.botonVolver404 {
+    background-color: rgba(255, 228, 196, 0.726);
+    border-radius: 20px;
+    border: 3px solid rgb(236, 162, 65,  0.726)
+}
+
+.botonVolver404:hover {
+    background-color: rgba(236, 162, 65, 0.726)
+}

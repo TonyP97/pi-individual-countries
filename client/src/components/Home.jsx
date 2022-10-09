@@ -1,10 +1,14 @@
 import React, { Fragment } from "react";
 // importo los hooks que voy a usar de react
+// useState() me permite trabajar con estados locales, acepta un valor inicial, devuelve un array con dos elementos, el valor y una función para modificarlo
+// useEffect() lo utilizo para llamar los datos de paises y actividades
 import { useState, useEffect } from "react";
 // importo los hooks de react redux
+// useDispatch() despacha/dispara la accion que se ejecuta en el reducer y modifica el estado global que es el estado del store
+// useSelector() permite extraer los datos del store de redux
 import { useDispatch, useSelector } from "react-redux";
 // importo las actions
-import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage, filterClean } from "../actions";
+import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage} from "../actions";
 import { Link } from "react-router-dom";
 // importo los componentes
 import Card from "./Card";
@@ -85,7 +89,7 @@ export default function Home(){
     // limpiar filtros
     function handleFilterClean(e){
         e.preventDefault();
-        dispatch(filterClean());
+        dispatch(getCountries());
         document.getElementById("continentselect").value="Filtrar por continente";
         document.getElementById("activityselect").value="Filtrar por actividad turística";
         document.getElementById("ordenalfbselect").value="Orden alfabético";

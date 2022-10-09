@@ -1,6 +1,6 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { postActivity, getCountries, getActivities } from "../actions";
+import { postActivity, getCountries } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./ActivityCreate.css" 
 
@@ -28,7 +28,7 @@ function validate(input){ // esta función valida, si falta algo en algun input,
     else if(!input.season){
         errors.season = "Se requiere una estación del año"
     }
-    else if(!input.country){
+    else if(!input.country.length){
         errors.country = "Se requiere al menos un país"
     }
     return errors
@@ -38,6 +38,8 @@ export default function ActivityCreate(){
     const dispatch = useDispatch();
     const history = useHistory(); // esto sirve para redirigir 
     const countries = useSelector((state) => state.countries); // traigo todo lo que esta en mi state de countries
+    const actividades = useSelector((state) => state.activities)
+    console.log(actividades)
     const [errors, setErros] = useState({});
 
     // declaro mi input con los diferentes campos que deben ser modificados/los campos que son requeridos por la actividad
@@ -105,10 +107,14 @@ export default function ActivityCreate(){
     // esta funcion utiliza la función encargada de crear la actividad cuando se submitea el formulario con todos sus inputs llenos, y setea el input vación con los datos que contenga.
     function handleSubmit(e){
         e.preventDefault();
-        console.log(input);
-        dispatch(postActivity(input));
-        alert("Actividad creada correctamente");
-        setInput({
+        // chequeo que la actividad no exista
+        if(actividades.find((act) => act.name.toLowerCase() === input.name.toLowerCase())){
+            alert("Ya existe una actividad con ese nombre, prueba con otro")
+        } else {
+            console.log(input);
+            dispatch(postActivity(input));
+            alert("Actividad creada correctamente");
+            setInput({
             name: "",
             difficulty: "",
             duration: "",
@@ -116,6 +122,8 @@ export default function ActivityCreate(){
             country: [] 
         });
         history.push("/home") // ya se creo la actividad llevame al home
+        }
+        
     };
 
     // esta función elimina un país seleccionado para adquirir la actividad
@@ -126,14 +134,15 @@ export default function ActivityCreate(){
         })
     }
 
-    useEffect(() => {
+    // para que al actualizar la página se cargue la lista de países en el select
+    useEffect(()=>{
         dispatch(getCountries());
-        dispatch(getActivities());
     }, [dispatch])
 
+
     return(
-        <div>
-        <div className="contenedorActivityCreate">
+        <div key="contenedorActiviCreate">
+        <div key="contenedorActivityCreate" className="contenedorActivityCreate">
 
             {/* BOTON VOLVER */}
             <Link to= "/home"><button className="botonVolverr">Volver</button></Link>
@@ -259,7 +268,7 @@ export default function ActivityCreate(){
                 </div>
                 {/* CREAR ACTIVIDAD    */}
                 <div>
-                <button type="submit" className="botonCrear" disabled={!input.name || !input.difficulty || !input.duration || !input.season || !input.country}>Crear actividad</button>
+                <button id="botonCrear" type="submit" className="botonCrear" disabled={!input.name || !input.difficulty || !input.duration || !input.season || !input.country.length}>Crear actividad</button>
                 </div>
             </form>
             {/* PAISES SELECCIONADOS */}

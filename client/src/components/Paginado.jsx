@@ -14,7 +14,7 @@ export default function Paginado({countriesPerPage}){
         dispatch(setCurrentPage(pageNumber))
     };
 
-    for (let i = 0; i <= Math.trunc((countries.length /countriesPerPage)) ; i++) { // me devuelvo la parte entera del num por si salen decimales
+    for (let i = 0; i <= Math.ceil((countries.length /countriesPerPage)) ; i++) { // me devuelvo el entero
                     pageNumbers.push(i + 1) // para que arranque en la primer página
                 }
 

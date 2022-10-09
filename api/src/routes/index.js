@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const axios = require("axios")
 // traigo las tablas
 const { Activity, Country, country_activity } = require("../db.js")
 // Importar todos los routers;
