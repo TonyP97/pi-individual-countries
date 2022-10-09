@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from "react-redux";
 import { store } from "./store";
 
-// envolvemos el index en provoder para que redux nos de bola
+// envolvemos el index en provider para que redux nos de bola y todos los componentes de nuestra app tengan acceso al store
 ReactDOM.render(
   <Provider store={store}> 
   <React.StrictMode>

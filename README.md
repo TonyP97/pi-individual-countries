@@ -1,6 +1,35 @@
-![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)
-
 # Individual Project - Henry Countries
+
+## Caracteristicas de la web app
+Es una SPA (single page application) que utiliza React para el Front End y Redux como state management. Todos los componentes estan desarrollados con CSS sin uso de librerías externas. 
+La SPA consume datos de una API "REST Countries" a través de un Back End desarrollado en Node.JS utilizando Express, agregando nuevas funcionalidades a la API original como:
+- Buscar paises
+- Filtrarlos por continente y/o actividad turistica
+- Ordenarlos ascendente o descendentemente por nombre o cantidad de población
+- Crear actividades turísticas en un formulario controlado con javascript
+
+## Imagenes del proyecto
+<p align="left">
+<img height="500" src="./LandingPage.png"/>
+</p>
+<p align="left">
+<img height="500" src="./Home.png"/>
+</p>
+<p align="left">
+<img height="500" src="./ActivityCreate.png"/>
+</p>
+<p align="left">
+<img height="500" src="./FilterByContinent.png"/>
+</p>
+<p align="left">
+<img height="500" src="./FilterByActivity.png"/>
+</p>
+<p align="left">
+<img height="500" src="./CountryDetail.png"/>
+</p>
+
+## Consignas originales del proyecto
+![HenryLogo](https://d31uz8lwfmyn8g.cloudfront.net/Assets/logo-henry-white-lg.png)
 
 <p align="left">
   <img height="200" src="./countries.png" />

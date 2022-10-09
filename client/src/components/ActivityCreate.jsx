@@ -84,11 +84,18 @@ export default function ActivityCreate(){
     };
 
     // esta funcion asigna al input de country, los paises que hayan sido seleccionados para adquirir la actividad turisticas
+    // verifico que no se repita el pais
     function handleSelect(e){
-        setInput({
-            ...input,
-            country: [...input.country, e.target.value]
-        })
+        if(input.country.includes(e.target.value)){
+            setInput({
+                ...input,
+            })
+        } else {
+            setInput({
+                ...input,
+                country: [...input.country, e.target.value]
+            })
+        }   
         setErros(validate({ // valida que haya algo en el input
             ...input,
             [e.target.country] : e.target.value
