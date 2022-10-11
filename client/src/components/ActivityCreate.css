@@ -146,3 +146,28 @@ h1 {
 .selectPaises:focus {
     outline: none;
 }
+
+@media (max-width: 480px){
+    .contenedorActivityCreate {
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 20px;
+        background-color: rgba(255, 228, 196, 0.800);
+        border-radius: 25px;
+    }
+    .botonVolverr {
+        margin: 10px 0px;
+    }
+}
+
+@media (max-width: 900px){
+    .contenedorActivityCreate {
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 20px;
+        background-color: rgba(255, 228, 196, 0.800);
+        border-radius: 25px;
+        }
+}

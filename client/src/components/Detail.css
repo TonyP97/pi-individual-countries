@@ -48,3 +48,25 @@ p {
 .botonVolverDetail:hover {
     background-color: rgba(236, 162, 65, 0.726)
 }
+
+@media (max-width: 480px){
+    .detalle {
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 20px;
+        background-color: rgba(255, 228, 196, 0.800);
+        border-radius: 25px;
+    }
+}
+
+@media (max-width: 900px){
+    .detalle {
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        margin: 20px;
+        background-color: rgba(255, 228, 196, 0.800);
+        border-radius: 25px;
+        }
+}

@@ -16,6 +16,22 @@
     margin: 4%;
 }
 
+@media (max-width: 480px){
+    .landing {
+        display: flex;
+        justify-content: center;
+        margin: 200px 0px;
+    }
+}
+
+@media (max-width: 820px){
+    .landing {
+        display: flex;
+        justify-content: center;
+        margin: 100px 0px;
+    }
+}
+
 .botonHome {
     background-color: rgba(255, 228, 196, 0.726);
     border-radius: 20px;
