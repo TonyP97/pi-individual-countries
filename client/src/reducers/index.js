@@ -114,6 +114,11 @@ function rootReducer (state= initialState, action) {
                 ...state,
                 page: action.payload
             }
+        case "CLEAN_CARD":
+            return{
+                ...state,
+                detail: [],
+            }
         // default
         default: 
             return state;

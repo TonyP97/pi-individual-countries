@@ -120,6 +120,11 @@ export const setCurrentPage = (payload) => {
     };
   };
 
+  export const cleanCard = () => {
+    return {
+        type: "CLEAN_CARD"
+    }
+  }
 
 // export function getDetail (id) {
 //     return function (dispatch) {

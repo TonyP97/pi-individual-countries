@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 // useSelector() permite extraer los datos del store de redux
 import { useDispatch, useSelector } from "react-redux";
 // importo las actions
-import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage} from "../actions";
+import { getCountries, filterCountriesByContinent, getActivities ,filterActivityCreated, orderByName, orderByPopulation, setCurrentPage, cleanCard} from "../actions";
 import { Link } from "react-router-dom";
 // importo los componentes
 import Card from "./Card";
@@ -45,7 +45,8 @@ export default function Home(){
 
     useEffect(() => {
         dispatch(getCountries());
-        dispatch(getActivities())
+        dispatch(getActivities());
+        dispatch(cleanCard());
     }, [dispatch])
     
     // HANDLES
