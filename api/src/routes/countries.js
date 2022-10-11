@@ -18,9 +18,10 @@ const router = Router();
 const getApiInfo = async () => {
     try {
         let api = (await axios.get("https://restcountries.com/v3.1/all")); // obtengo los datos de la api
-        api = await api.data.map((c) => 
-            Country.findOrCreate({ // en mi base de datos de paises, creo cada país con los datos que requiere la base de datos
-            where: {
+        api = await api.data.map((c) => {
+            // Country.findOrCreate({ // en mi base de datos de paises, creo cada país con los datos que requiere la base de datos
+            // where: {
+            const country = {
                 id: c.cca3,
                 name: c.translations.spa.official,
                 flags: c.flags.png,
@@ -30,14 +31,31 @@ const getApiInfo = async () => {
                 area: c.area,
                 population: c.population,
             }
-        }))
-        console.log("Base de datos cargada correctamente")
+            return country;
+        })
+        return api;
+        // console.log("Base de datos cargada correctamente")
     } catch (error) {
         console.log(error)
     }   
 };
 
-getApiInfo(); // ejecuto la función para que se cargue mi base de datos
+// getApiInfo(); // ejecuto la función para que se cargue mi base de datos
+
+const countriesToDb = async () => {
+    try {
+        const countries = await Country.findAll();
+            if(!countries.length) {
+                const array = await getApiInfo();
+                await Country.bulkCreate(array)
+                }
+                console.log("Base de datos cargada correctamente")
+    } catch (error) {
+        console.log(error)
+    }
+}
+const loadCountries = async () => { await countriesToDb() }
+loadCountries();
 
 // busco todos los paises incluyendo sus acitvidades con sus atributos
 router.get('/countries', async (req, res) => {
