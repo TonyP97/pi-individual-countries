@@ -40,7 +40,7 @@ export default function Home(){
     const indexOfLastCountrie = page * countriesPerPage - 1; // el index del ultimo país, se resta 1 porque en la primer página son 9 
     const indexOfFirstCountrie = page === 1 ? indexOfLastCountrie - (countriesPerPage - 1) : indexOfLastCountrie - countriesPerPage; // si es la primer página, se muestran 9, sino 10
     const currentCountries = allCountries.slice(indexOfFirstCountrie, indexOfLastCountrie) // paises de la página actual
-
+    
     const [, setOrden] = useState('');
 
     useEffect(() => {
@@ -158,19 +158,32 @@ export default function Home(){
                 <SearchBar key={null}/>
 
             {/* CARTAS */}
-            <div className="cartas">
+            
                 {
-                // allCountries?.map((c) => {
-                currentCountries?.map((c) => {
-                    return (
-                        <Fragment>
-                            <Link to={"/countries/" + c.id} className="carta">
-                                <Card key={c.name} name={c.name} id={c.id} continents={c.continents} flags={c.flags}/>
-                            </Link>
-                        </Fragment>                            
-                    )})
-                }
-            </div>
+                currentCountries.length?
+                <div className="cartas">
+                    {
+                    currentCountries.map((c) => {
+                        return (
+                            
+                            <Fragment>
+                                <Link to={"/countries/" + c.id} className="carta">
+                                    <Card key={c.name} name={c.name} id={c.id} continents={c.continents} flags={c.flags}/>
+                                </Link>
+                            </Fragment>  
+                                                    
+                        )})
+                    }
+                    </div> 
+                    : 
+                    <div className="contenedorcargandopaises">
+                        <div className="cargandopaises">
+                            <div class="lds-ring"><div></div><div></div><div></div><div></div>
+                            </div>
+                            <span className="textocargando">Cargando países...</span>
+                        </div>
+                    </div>
+                } 
 
             {/* PAGINACIÓN */}
             <div className="paginadito">
