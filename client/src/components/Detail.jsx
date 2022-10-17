@@ -41,7 +41,14 @@ export default function Detail(props){
                     <p>Población: {myCountry[0].population}</p>
                     <h5>Actividades turísticas: {myCountry[0].activities.length? myCountry[0].activities.map(el => `● ${el.name} -Dificultad: ${el.difficulty} -Duración: ${el.duration}hs -Estación: ${el.season} `) : "Ninguna por el momento"} </h5>
                 </div> 
-                : <p>Loading...</p> // sino muestro un Loading...
+                : 
+                <div className="contenedorcargandopais">
+                        <div className="cargandopais">
+                            <div class="lds-ring"><div></div><div></div><div></div><div></div>
+                            </div>
+                            <span className="textocargandopais">Cargando país...</span>
+                        </div>
+                    </div> // sino muestro un Loading...
                 
             }
             
